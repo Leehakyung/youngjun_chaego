@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>L'OISEAU DÉ — Design System</title>
+  <style>
+  /* ── TOKENS ─────────────────────────────────────────── */
+  :root {
+    /* Neutrals */
+    --c-black:   #000000;
+    --c-white:   #ffffff;
+    --c-cream:   #f7f5ed;
+    --c-gray-l:  #ecece4;
+    --c-tan:     #cacab0;
+
+    /* Brand */
+    --c-espresso: #483f36;
+    --c-forest:   #486e46;
+    --c-lime:     #c3e794;
+    --c-sage:     #d7e2c1;
+    --c-mint:     #f0f7ed;
+
+    /* Accent */
+    --c-gold:     #e8d695;
+    --c-lavender: #fef7ff;
+    --c-coral:    #ff2244;
+
+    /* Semantic */
+    --bg:         var(--c-cream);
+    --bg-surface: var(--c-white);
+    --bg-muted:   var(--c-gray-l);
+    --fg:         var(--c-black);
+    --fg-muted:   var(--c-espresso);
+    --fg-subtle:  var(--c-tan);
+    --border:     var(--c-gray-l);
+    --accent:     var(--c-forest);
+    --accent-hi:  var(--c-lime);
+
+    /* Type */
+    --font-display: "Clash Display", "Bahnschrift", "Gill Sans MT", "Trebuchet MS", sans-serif;
+    --font-body:    "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+
+    /* Spacing scale (4px base) */
+    --sp-1:  4px;
+    --sp-2:  8px;
+    --sp-3:  12px;
+    --sp-4:  16px;
+    --sp-5:  20px;
+    --sp-6:  24px;
+    --sp-8:  32px;
+    --sp-10: 40px;
+    --sp-12: 48px;
+    --sp-16: 64px;
+    --sp-20: 80px;
+    --sp-24: 96px;
+
+    /* Radius */
+    --r-sm: 2px;
+    --r-md: 4px;
+    --r-lg: 8px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg:         #1a1714;
+      --bg-surface: #252119;
+      --bg-muted:   #2e2a25;
+      --fg:         var(--c-cream);
+      --fg-muted:   var(--c-tan);
+      --fg-subtle:  #7a7268;
+      --border:     #3a342e;
+      --accent:     var(--c-lime);
+      --accent-hi:  var(--c-forest);
+    }
+  }
+
+  :root[data-theme="light"] {
+    --bg:         var(--c-cream);
+    --bg-surface: var(--c-white);
+    --bg-muted:   var(--c-gray-l);
+    --fg:         var(--c-black);
+    --fg-muted:   var(--c-espresso);
+    --fg-subtle:  var(--c-tan);
+    --border:     var(--c-gray-l);
+    --accent:     var(--c-forest);
+    --accent-hi:  var(--c-lime);
+  }
+
+  :root[data-theme="dark"] {
+    --bg:         #1a1714;
+    --bg-surface: #252119;
+    --bg-muted:   #2e2a25;
+    --fg:         var(--c-cream);
+    --fg-muted:   var(--c-tan);
+    --fg-subtle:  #7a7268;
+    --border:     #3a342e;
+    --accent:     var(--c-lime);
+    --accent-hi:  var(--c-forest);
+  }
+
+  /* ── RESET ───────────────────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-size: 16px; scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    text-wrap: balance;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+
+  /* ── LAYOUT ──────────────────────────────────────────── */
+  .doc {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 var(--sp-8);
+  }
+
+  /* ── HEADER ──────────────────────────────────────────── */
+  .site-header {
+    background: var(--c-espresso);
+    color: var(--c-cream);
+    padding: var(--sp-20) var(--sp-8) var(--sp-16);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .site-header::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -80px;
+    width: 420px; height: 420px;
+    background: radial-gradient(circle, rgba(195,231,148,0.18) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .header-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 var(--sp-8);
+  }
+
+  .brand-eyebrow {
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--c-lime);
+    margin-bottom: var(--sp-6);
+    display: block;
+  }
+
+  .brand-name {
+    font-family: var(--font-display);
+    font-size: clamp(56px, 10vw, 96px);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 0.95;
+    color: var(--c-cream);
+    margin-bottom: var(--sp-6);
+  }
+
+  .brand-tagline {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 300;
+    letter-spacing: 0.04em;
+    color: var(--c-tan);
+    text-transform: uppercase;
+  }
+
+  .header-meta {
+    margin-top: var(--sp-12);
+    padding-top: var(--sp-6);
+    border-top: 1px solid rgba(202,202,176,0.25);
+    display: flex;
+    gap: var(--sp-8);
+    flex-wrap: wrap;
+  }
+
+  .header-meta span {
+    font-size: 12px;
+    color: var(--c-tan);
+    letter-spacing: 0.08em;
+  }
+
+  .header-meta strong {
+    color: var(--c-cream);
+    font-weight: 500;
+  }
+
+  /* ── THEME TOGGLE ────────────────────────────────────── */
+  .theme-toggle {
+    position: fixed;
+    top: var(--sp-5);
+    right: var(--sp-5);
+    z-index: 100;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 6px 14px;
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--fg);
+    cursor: pointer;
+    letter-spacing: 0.06em;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .theme-toggle:hover { background: var(--bg-muted); }
+  .theme-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  /* ── SECTION COMMON ──────────────────────────────────── */
+  .section {
+    padding: var(--sp-20) 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section:last-child { border-bottom: none; }
+
+  .section-label {
+    font-family: var(--font-body);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--fg-subtle);
+    display: block;
+    margin-bottom: var(--sp-3);
+  }
+
+  .section-title {
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 600;
+    color: var(--fg);
+    margin-bottom: var(--sp-8);
+  }
+
+  .section-desc {
+    font-size: 15px;
+    color: var(--fg-muted);
+    max-width: 60ch;
+    margin-bottom: var(--sp-10);
+    line-height: 1.7;
+  }
+
+  /* ── COLOR SECTION ───────────────────────────────────── */
+  .color-group { margin-bottom: var(--sp-10); }
+
+  .color-group-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--fg-subtle);
+    margin-bottom: var(--sp-4);
+    padding-bottom: var(--sp-2);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .color-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: var(--sp-4);
+  }
+
+  .color-chip {
+    border-radius: var(--r-md);
+    overflow: hidden;
+    border: 1px solid rgba(0,0,0,0.06);
+  }
+
+  .color-swatch {
+    height: 80px;
+    display: flex;
+    align-items: flex-end;
+    padding: var(--sp-2);
+  }
+
+  .color-info {
+    padding: var(--sp-3);
+    background: var(--bg-surface);
+  }
+
+  .color-name {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--fg);
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  .color-hex {
+    font-size: 11px;
+    color: var(--fg-subtle);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.05em;
+    font-family: "Consolas", "Courier New", monospace;
+  }
+
+  .color-usage {
+    font-size: 10px;
+    color: var(--fg-subtle);
+    margin-top: 4px;
+    line-height: 1.4;
+  }
+
+  /* ── TYPOGRAPHY SECTION ──────────────────────────────── */
+  .type-scale { display: flex; flex-direction: column; gap: 0; }
+
+  .type-row {
+    display: grid;
+    grid-template-columns: 100px 1fr 120px;
+    gap: var(--sp-4);
+    align-items: baseline;
+    padding: var(--sp-4) 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .type-row:first-child { border-top: 1px solid var(--border); }
+
+  .type-meta {
+    font-size: 11px;
+    color: var(--fg-subtle);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.05em;
+    font-family: "Consolas", "Courier New", monospace;
+    padding-top: 4px;
+  }
+
+  .type-spec {
+    font-size: 10px;
+    color: var(--fg-subtle);
+    text-align: right;
+    white-space: nowrap;
+    padding-top: 4px;
+  }
+
+  .type-specimen { overflow: hidden; }
+
+  .ts-hero-xl { font-family: var(--font-display); font-size: 120px; font-weight: 700; letter-spacing: -0.04em; line-height: 0.9; color: var(--fg); }
+  .ts-hero    { font-family: var(--font-display); font-size: 80px;  font-weight: 700; letter-spacing: -0.035em; line-height: 0.92; color: var(--fg); }
+  .ts-display { font-family: var(--font-display); font-size: 48px;  font-weight: 600; letter-spacing: -0.025em; line-height: 1.0; color: var(--fg); }
+  .ts-h1      { font-family: var(--font-display); font-size: 36px;  font-weight: 600; letter-spacing: -0.02em; line-height: 1.05; color: var(--fg); }
+  .ts-h2      { font-family: var(--font-display); font-size: 28px;  font-weight: 500; letter-spacing: -0.015em; line-height: 1.1; color: var(--fg); }
+  .ts-h3      { font-family: var(--font-display); font-size: 22px;  font-weight: 500; letter-spacing: -0.01em; line-height: 1.15; color: var(--fg); }
+  .ts-body-lg { font-family: var(--font-body); font-size: 18px; font-weight: 400; line-height: 1.65; color: var(--fg); }
+  .ts-body    { font-family: var(--font-body); font-size: 15px; font-weight: 400; line-height: 1.6; color: var(--fg); }
+  .ts-body-sm { font-family: var(--font-body); font-size: 13px; font-weight: 400; line-height: 1.55; color: var(--fg); }
+  .ts-label   { font-family: var(--font-body); font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--fg-muted); }
+  .ts-price   { font-family: var(--font-display); font-size: 24px; font-weight: 500; letter-spacing: -0.01em; font-variant-numeric: tabular-nums; color: var(--fg); }
+
+  .font-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    padding: var(--sp-8);
+    margin-bottom: var(--sp-4);
+  }
+
+  .font-role {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--fg-subtle);
+    margin-bottom: var(--sp-4);
+  }
+
+  .font-demo-display {
+    font-family: var(--font-display);
+    font-size: 42px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    color: var(--fg);
+    margin-bottom: var(--sp-4);
+  }
+
+  .font-demo-body {
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--fg-muted);
+  }
+
+  .font-weights {
+    margin-top: var(--sp-5);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-4);
+  }
+
+  .font-weight-item { font-family: var(--font-display); font-size: 20px; color: var(--fg); }
+  .font-weight-meta { font-size: 10px; color: var(--fg-subtle); letter-spacing: 0.1em; margin-top: 2px; }
+
+  /* ── SPACING SECTION ─────────────────────────────────── */
+  .spacing-grid { display: flex; flex-direction: column; gap: var(--sp-3); }
+
+  .spacing-row { display: flex; align-items: center; gap: var(--sp-5); }
+
+  .spacing-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--fg-subtle);
+    width: 40px;
+    font-variant-numeric: tabular-nums;
+    font-family: "Consolas", "Courier New", monospace;
+    flex-shrink: 0;
+  }
+
+  .spacing-bar-wrap { flex: 1; display: flex; align-items: center; gap: var(--sp-3); }
+
+  .spacing-bar {
+    height: 24px;
+    background: var(--c-sage);
+    border-radius: var(--r-sm);
+    flex-shrink: 0;
+  }
+
+  .spacing-px {
+    font-size: 11px;
+    color: var(--fg-subtle);
+    font-family: "Consolas", "Courier New", monospace;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ── BREAKPOINTS ─────────────────────────────────────── */
+  .breakpoint-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-4); }
+
+  .breakpoint-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    padding: var(--sp-6);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .breakpoint-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+
+  .bp-mobile::before  { background: var(--c-sage); }
+  .bp-tablet::before  { background: var(--c-forest); }
+  .bp-desktop::before { background: var(--c-lime); }
+
+  .breakpoint-name  { font-family: var(--font-display); font-size: 18px; font-weight: 600; color: var(--fg); margin-bottom: var(--sp-2); }
+  .breakpoint-range { font-size: 12px; color: var(--fg-subtle); font-family: "Consolas", "Courier New", monospace; margin-bottom: var(--sp-4); }
+  .breakpoint-note  { font-size: 12px; color: var(--fg-muted); line-height: 1.5; }
+
+  /* ── COMPONENTS SECTION ──────────────────────────────── */
+  .component-row { margin-bottom: var(--sp-12); }
+
+  .component-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--fg-subtle);
+    margin-bottom: var(--sp-5);
+    padding-bottom: var(--sp-3);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .btn-row { display: flex; flex-wrap: wrap; gap: var(--sp-3); align-items: center; margin-bottom: var(--sp-4); }
+
+  .btn {
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp-2);
+    transition: all 0.18s ease;
+    text-decoration: none;
+  }
+
+  .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+  .btn-primary   { background: var(--c-black);  color: var(--c-white); padding: 14px 28px; border-radius: var(--r-sm); }
+  .btn-secondary { background: transparent; color: var(--fg); padding: 13px 27px; border-radius: var(--r-sm); border: 1px solid var(--border); }
+  .btn-accent    { background: var(--c-forest); color: var(--c-lime);  padding: 14px 28px; border-radius: var(--r-sm); }
+  .btn-ghost     { background: transparent; color: var(--c-forest); padding: 12px 0; border-radius: 0; border-bottom: 1px solid var(--c-forest); }
+
+  .btn-primary:hover   { background: var(--c-espresso); }
+  .btn-secondary:hover { border-color: var(--fg); }
+  .btn-accent:hover    { background: #3a5938; }
+  .btn-ghost:hover     { color: var(--c-espresso); border-color: var(--c-espresso); }
+
+  .badge-row { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
+
+  .badge {
+    font-family: var(--font-body);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 40px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .badge-new   { background: var(--c-lime);   color: var(--c-forest); }
+  .badge-sale  { background: var(--c-coral);  color: var(--c-white); }
+  .badge-gold  { background: var(--c-gold);   color: var(--c-espresso); }
+  .badge-muted { background: var(--bg-muted); color: var(--fg-muted); border: 1px solid var(--border); }
+
+  .nav-specimen {
+    background: var(--c-espresso);
+    border-radius: var(--r-lg);
+    padding: var(--sp-5) var(--sp-6);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-6);
+    flex-wrap: wrap;
+  }
+
+  .nav-brand { font-family: var(--font-display); font-size: 18px; font-weight: 700; letter-spacing: 0.05em; color: var(--c-cream); }
+
+  .nav-links { display: flex; gap: var(--sp-6); list-style: none; }
+
+  .nav-links li a {
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--c-tan);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+
+  .nav-links li a:hover     { color: var(--c-lime); }
+  .nav-links li.nav-active a { color: var(--c-cream); }
+
+  .product-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-4); }
+
+  .product-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-md);
+    overflow: hidden;
+  }
+
+  .product-img {
+    aspect-ratio: 3/4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .product-img-a { background: var(--c-mint); }
+  .product-img-b { background: var(--c-espresso); }
+  .product-img-c { background: var(--c-gold); }
+
+  .product-img-label { font-family: var(--font-display); font-size: 13px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; }
+  .product-img-a .product-img-label { color: var(--c-forest); }
+  .product-img-b .product-img-label { color: var(--c-cream); }
+  .product-img-c .product-img-label { color: var(--c-espresso); }
+
+  .product-badge-wrap { position: absolute; top: var(--sp-3); left: var(--sp-3); }
+
+  .product-info { padding: var(--sp-4) var(--sp-5); }
+
+  .product-category { font-size: 10px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--fg-subtle); margin-bottom: var(--sp-1); }
+  .product-name     { font-family: var(--font-display); font-size: 15px; font-weight: 500; color: var(--fg); margin-bottom: var(--sp-3); letter-spacing: -0.01em; }
+
+  .product-price-row { display: flex; align-items: baseline; gap: var(--sp-2); }
+
+  .price-current  { font-family: var(--font-display); font-size: 18px; font-weight: 600; color: var(--fg); font-variant-numeric: tabular-nums; }
+  .price-original { font-size: 12px; color: var(--fg-subtle); text-decoration: line-through; font-variant-numeric: tabular-nums; }
+
+  /* ── MOTION ──────────────────────────────────────────── */
+  .motion-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-4); }
+
+  .motion-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    padding: var(--sp-6);
+  }
+
+  .motion-name  { font-family: var(--font-display); font-size: 16px; font-weight: 600; color: var(--fg); margin-bottom: var(--sp-2); }
+  .motion-value { font-family: "Consolas", "Courier New", monospace; font-size: 12px; color: var(--c-forest); margin-bottom: var(--sp-3); display: block; }
+  .motion-desc  { font-size: 12px; color: var(--fg-muted); line-height: 1.5; }
+
+  /* ── BRAND PRINCIPLES ────────────────────────────────── */
+  .principle-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-4); }
+
+  .principle-card {
+    padding: var(--sp-6);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    background: var(--bg-surface);
+  }
+
+  .principle-number { font-family: var(--font-display); font-size: 11px; font-weight: 600; letter-spacing: 0.18em; color: var(--c-forest); margin-bottom: var(--sp-3); display: block; }
+  .principle-title  { font-family: var(--font-display); font-size: 22px; font-weight: 600; color: var(--fg); letter-spacing: -0.01em; margin-bottom: var(--sp-3); }
+  .principle-body   { font-size: 13px; color: var(--fg-muted); line-height: 1.6; }
+
+  /* ── FOOTER ──────────────────────────────────────────── */
+  .doc-footer {
+    background: var(--c-espresso);
+    color: var(--c-tan);
+    padding: var(--sp-12) var(--sp-8);
+    margin-top: var(--sp-16);
+  }
+
+  .doc-footer .footer-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: var(--sp-6);
+  }
+
+  .footer-brand { font-family: var(--font-display); font-size: 28px; font-weight: 700; color: var(--c-cream); letter-spacing: -0.02em; }
+  .footer-meta  { font-size: 12px; letter-spacing: 0.08em; }
+
+  /* ── RESPONSIVE ──────────────────────────────────────── */
+  @media (max-width: 700px) {
+    .breakpoint-grid { grid-template-columns: 1fr; }
+    .product-grid    { grid-template-columns: 1fr 1fr; }
+    .motion-grid     { grid-template-columns: 1fr; }
+    .principle-grid  { grid-template-columns: 1fr; }
+    .type-row        { grid-template-columns: 80px 1fr; }
+    .type-spec       { display: none; }
+    .ts-hero-xl      { font-size: 72px; }
+    .ts-hero         { font-size: 52px; }
+    .font-weights    { flex-direction: column; }
+    .doc             { padding: 0 var(--sp-5); }
+  }
+
+  @media (max-width: 480px) {
+    .product-grid { grid-template-columns: 1fr; }
+    .brand-name   { font-size: 52px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition: none !important; }
+  }
+  </style>
+</head>
+<body>
+
+<button class="theme-toggle" onclick="
+  const root = document.documentElement;
+  const cur = root.getAttribute('data-theme');
+  if (!cur) {
+    const isDark = window.matchMedia('(prefers-color-scheme:dark)').matches;
+    root.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  } else {
+    root.setAttribute('data-theme', cur === 'dark' ? 'light' : 'dark');
+  }
+  this.textContent = root.getAttribute('data-theme') === 'dark' ? '☀ Light' : '◑ Dark';
+">◑ Dark</button>
+
+<header class="site-header">
+  <div class="header-inner">
+    <span class="brand-eyebrow">Design System · v1.0</span>
+    <h1 class="brand-name">L'OISEAU<br>DÉ</h1>
+    <p class="brand-tagline">Cosmetic &amp; Beauty E-commerce</p>
+    <div class="header-meta">
+      <span><strong>Framework</strong> Framer</span>
+      <span><strong>Published</strong> May 2026</span>
+      <span><strong>Display</strong> Clash Display</span>
+      <span><strong>Body</strong> Inter</span>
+    </div>
+  </div>
+</header>
+
+<main class="doc">
+
+  <section class="section">
+    <span class="section-label">Foundation</span>
+    <h2 class="section-title">Brand Language</h2>
+    <p class="section-desc">L'OISEAU DÉ is a modern atelier — a space where elegance meets simplicity. The design system reflects a botanical luxury sensibility: nature-sourced, unhurried, and deeply considered.</p>
+    <div class="principle-grid">
+      <div class="principle-card">
+        <span class="principle-number">A</span>
+        <h3 class="principle-title">Botanical Palette</h3>
+        <p class="principle-body">Colors drawn from nature — forest greens, sage, cream, warm espresso — with lime chartreuse as the living accent that bridges earth and energy.</p>
+      </div>
+      <div class="principle-card">
+        <span class="principle-number">B</span>
+        <h3 class="principle-title">Editorial Scale</h3>
+        <p class="principle-body">Display typography used at dramatic scale. "Clash Display" carries the brand personality — geometric, confident, and unhurried. Never crowded.</p>
+      </div>
+      <div class="principle-card">
+        <span class="principle-number">C</span>
+        <h3 class="principle-title">Restraint</h3>
+        <p class="principle-body">White space is the primary luxury. The grid breathes. No element competes with the product. Decoration is used only when it serves the product story.</p>
+      </div>
+      <div class="principle-card">
+        <span class="principle-number">D</span>
+        <h3 class="principle-title">Sensory Language</h3>
+        <p class="principle-body">Copy uses texture words: velvet, warm, fresh, radiant. UI language matches this register — never dry or transactional. Product names carry emotion.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <span class="section-label">Color System</span>
+    <h2 class="section-title">Palette</h2>
+    <p class="section-desc">Thirteen tokens organized into five groups. Every color has a CSS variable. Use the semantic aliases (--bg, --fg, --accent) in components — never hardcode hex values.</p>
+
+    <div class="color-group">
+      <div class="color-group-label">Neutrals</div>
+      <div class="color-grid">
+        <div class="color-chip"><div class="color-swatch" style="background:#000000;"></div><div class="color-info"><span class="color-name">Black</span><span class="color-hex">#000000</span><span class="color-usage">Primary text, CTA fills</span></div></div>
+        <div class="color-chip"><div class="color-swatch" style="background:#ffffff; border:1px solid #ecece4;"></div><div class="color-info"><span class="color-name">White</span><span class="color-hex">#ffffff</span><span class="color-usage">Card surfaces, overlays</span></div></div>
+        <div class="color-chip"><div class="color-swatch" style="background:#f7f5ed;"></div><div class="color-info"><span class="color-name">Cream</span><span class="color-hex">#f7f5ed</span><span class="color-usage">Page background</span></div></div>
+        <div class="color-chip"><div class="color-swatch" style="background:#ecece4;"></div><div class="color-info"><span class="color-name">Gray Light</span><span class="color-hex">#ecece4</span><span class="color-usage">Borders, muted surfaces</span></div></div>
+        <div class="color-chip"><div class="color-swatch" style="background:#cacab0;"></div><div class="color-info"><span class="color-name">Warm Tan</span><span class="color-hex">#cacab0</span><span class="color-usage">Subtle text, dividers</span></div></div>
+      </div>
+    </div>
+
+    <div class="color-group">
+      <div class="color-group-label">Earth — EARTH NOIR</div>
+      <div class="color-grid">
+        <div class="color-chip"><div class="color-swatch" style="background:#483f36;"></div><div class="color-info"><span class="color-name">Espresso</span><span class="color-hex">#483f36</span><span class="color-usage">Nav bg, dark sections, secondary text</span></div></div>
+      </div>
+    </div>
+
+    <div class="color-group">
+      <div class="color-group-label">Botanical Greens — VELVET CITRUS</div>
+      <div class="color-grid">
+        <div class="color-chip"><div class="color-swatch" style="background:#486e46;"></div><div class="color-info"><span class="color-name">Forest</span><span class="color-hex">#486e46</span><span class="color-usage">Accent buttons, icon fills</span></div></div>
+        <div class="color-chip"><div class="color-swatch" style="background:#c3e794;"></div><div class="color-info"><span class="color-name">Lime</span><span class="color-hex">#c3e794</span><span class="color-usage">Highlights, badges, active states</span></div></div>
+        <div class="color-chip"><div class="color-swatch" style="background:#d7e2c1;"></div><div class="color-info"><span class="color-name">Sage</span><span class="color-hex">#d7e2c1</span><span class="color-usage">Card tints, hover backgrounds</span></div></div>
+        <div class="color-chip"><div class="color-swatch" style="background:#f0f7ed;"></div><div class="color-info"><span class="color-name">Mint</span><span class="color-hex">#f0f7ed</span><span class="color-usage">Category card backgrounds</span></div></div>
+      </div>
+    </div>
+
+    <div class="color-group">
+      <div class="color-group-label">Accent &amp; Functional</div>
+      <div class="color-grid">
+        <div class="color-chip"><div class="color-swatch" style="background:#e8d695;"></div><div class="color-info"><span class="color-name">Gold</span><span class="color-hex">#e8d695</span><span class="color-usage">Premium badges, warmth accents</span></div></div>
+        <div class="color-chip"><div class="color-swatch" style="background:#fef7ff;"></div><div class="color-info"><span class="color-name">Lavender White</span><span class="color-hex">#fef7ff</span><span class="color-usage">Soft background variant</span></div></div>
+        <div class="color-chip"><div class="color-swatch" style="background:#ff2244;"></div><div class="color-info"><span class="color-name">Coral</span><span class="color-hex">#ff2244</span><span class="color-usage">Sale badge, alert states only</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <span class="section-label">Typography</span>
+    <h2 class="section-title">Type System</h2>
+    <p class="section-desc">Two typefaces. Clash Display owns all headings and display text — its geometric confidence defines the brand character. Inter handles everything functional: body copy, labels, UI chrome.</p>
+
+    <div class="font-card" style="margin-bottom:var(--sp-4);">
+      <div class="font-role">Display · Clash Display</div>
+      <div class="font-demo-display">Elegance<br>Grace Daily Life</div>
+      <div class="font-weights">
+        <div><div class="font-weight-item" style="font-weight:300;">Light 300</div><div class="font-weight-meta">Subcopy, editorial captions</div></div>
+        <div><div class="font-weight-item" style="font-weight:400;">Regular 400</div><div class="font-weight-meta">Section labels, subheadings</div></div>
+        <div><div class="font-weight-item" style="font-weight:500;">Medium 500</div><div class="font-weight-meta">Product names, prices</div></div>
+        <div><div class="font-weight-item" style="font-weight:700;">Bold 700</div><div class="font-weight-meta">Hero titles, brand name</div></div>
+      </div>
+    </div>
+
+    <div class="font-card" style="margin-bottom:var(--sp-10);">
+      <div class="font-role">Body · Inter</div>
+      <div class="font-demo-body">We bring brands to life through thoughtful curation and considered design. Every product is chosen for its elegance, simplicity, and lasting quality — pieces people love to wear and use every day.</div>
+    </div>
+
+    <div class="type-scale">
+      <div class="type-row"><div class="type-meta">Hero XL</div><div class="type-specimen" style="max-height:130px;overflow:hidden;"><span class="ts-hero-xl">A</span></div><div class="type-spec">Clash / 120px / 700<br>–0.04em / lh 0.9</div></div>
+      <div class="type-row"><div class="type-meta">Hero</div><div class="type-specimen" style="max-height:90px;overflow:hidden;"><span class="ts-hero">Atelier</span></div><div class="type-spec">Clash / 80px / 700<br>–0.035em / lh 0.92</div></div>
+      <div class="type-row"><div class="type-meta">Display</div><div class="type-specimen"><span class="ts-display">Modern Atelier</span></div><div class="type-spec">Clash / 48px / 600<br>–0.025em / lh 1.0</div></div>
+      <div class="type-row"><div class="type-meta">H1</div><div class="type-specimen"><span class="ts-h1">Skin Care Collection</span></div><div class="type-spec">Clash / 36px / 600<br>–0.02em / lh 1.05</div></div>
+      <div class="type-row"><div class="type-meta">H2</div><div class="type-specimen"><span class="ts-h2">Featured Products</span></div><div class="type-spec">Clash / 28px / 500<br>–0.015em / lh 1.1</div></div>
+      <div class="type-row"><div class="type-meta">H3</div><div class="type-specimen"><span class="ts-h3">Brand Partnerships</span></div><div class="type-spec">Clash / 22px / 500<br>–0.01em / lh 1.15</div></div>
+      <div class="type-row"><div class="type-meta">Body LG</div><div class="type-specimen"><span class="ts-body-lg">Fresh, radiant, uplifting — products curated for your daily ritual.</span></div><div class="type-spec">Inter / 18px / 400<br>lh 1.65</div></div>
+      <div class="type-row"><div class="type-meta">Body</div><div class="type-specimen"><span class="ts-body">We believe in simplicity as a daily practice. Each piece reflects the idea that beauty is effortless when it comes from the right place.</span></div><div class="type-spec">Inter / 15px / 400<br>lh 1.6</div></div>
+      <div class="type-row"><div class="type-meta">Body SM</div><div class="type-specimen"><span class="ts-body-sm">Return policy · Terms of use · sales@loiseau.com</span></div><div class="type-spec">Inter / 13px / 400<br>lh 1.55</div></div>
+      <div class="type-row"><div class="type-meta">Label</div><div class="type-specimen"><span class="ts-label">Skin Care &nbsp;·&nbsp; New In &nbsp;·&nbsp; 50% Off</span></div><div class="type-spec">Inter / 11px / 600<br>+0.18em UC</div></div>
+      <div class="type-row"><div class="type-meta">Price</div><div class="type-specimen"><span class="ts-price">$180 &nbsp; $85 &nbsp; $140</span></div><div class="type-spec">Clash / 24px / 500<br>tabular nums</div></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <span class="section-label">Spacing</span>
+    <h2 class="section-title">Scale</h2>
+    <p class="section-desc">4px base unit. Eleven steps. Use token names (--sp-4, --sp-8 …) — never raw pixel values in components.</p>
+    <div class="spacing-grid">
+      <div class="spacing-row"><div class="spacing-label">--sp-1</div><div class="spacing-bar-wrap"><div class="spacing-bar" style="width:4px;"></div><span class="spacing-px">4px</span></div></div>
+      <div class="spacing-row"><div class="spacing-label">--sp-2</div><div class="spacing-bar-wrap"><div class="spacing-bar" style="width:8px;"></div><span class="spacing-px">8px</span></div></div>
+      <div class="spacing-row"><div class="spacing-label">--sp-3</div><div class="spacing-bar-wrap"><div class="spacing-bar" style="width:12px;"></div><span class="spacing-px">12px</span></div></div>
+      <div class="spacing-row"><div class="spacing-label">--sp-4</div><div class="spacing-bar-wrap"><div class="spacing-bar" style="width:16px;"></div><span class="spacing-px">16px · default gap</span></div></div>
+      <div class="spacing-row"><div class="spacing-label">--sp-6</div><div class="spacing-bar-wrap"><div class="spacing-bar" style="width:24px;"></div><span class="spacing-px">24px</span></div></div>
+      <div class="spacing-row"><div class="spacing-label">--sp-8</div><div class="spacing-bar-wrap"><div class="spacing-bar" style="width:32px;"></div><span class="spacing-px">32px · horizontal gutter</span></div></div>
+      <div class="spacing-row"><div class="spacing-label">--sp-10</div><div class="spacing-bar-wrap"><div class="spacing-bar" style="width:40px;"></div><span class="spacing-px">40px</span></div></div>
+      <div class="spacing-row"><div class="spacing-label">--sp-12</div><div class="spacing-bar-wrap"><div class="spacing-bar" style="width:48px;"></div><span class="spacing-px">48px</span></div></div>
+      <div class="spacing-row"><div class="spacing-label">--sp-16</div><div class="spacing-bar-wrap"><div class="spacing-bar" style="width:64px;"></div><span class="spacing-px">64px</span></div></div>
+      <div class="spacing-row"><div class="spacing-label">--sp-20</div><div class="spacing-bar-wrap"><div class="spacing-bar" style="width:80px;"></div><span class="spacing-px">80px · section padding</span></div></div>
+      <div class="spacing-row"><div class="spacing-label">--sp-24</div><div class="spacing-bar-wrap"><div class="spacing-bar" style="width:96px;"></div><span class="spacing-px">96px</span></div></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <span class="section-label">Layout</span>
+    <h2 class="section-title">Breakpoints &amp; Grid</h2>
+    <p class="section-desc">Three breakpoints. Max container width 1200px with 32px horizontal gutters. Content columns auto-fill with minmax.</p>
+    <div class="breakpoint-grid">
+      <div class="breakpoint-card bp-mobile"><div class="breakpoint-name">Mobile</div><div class="breakpoint-range">≤ 809px</div><div class="breakpoint-note">Single column. Nav collapses. Product grid 1-col. Full-bleed hero text.</div></div>
+      <div class="breakpoint-card bp-tablet"><div class="breakpoint-name">Tablet</div><div class="breakpoint-range">810px – 1199px</div><div class="breakpoint-note">2-column product grid. Nav links visible. Category cards stack vertically.</div></div>
+      <div class="breakpoint-card bp-desktop"><div class="breakpoint-name">Desktop</div><div class="breakpoint-range">≥ 1200px</div><div class="breakpoint-note">3-column product grid. Full navigation. Side-by-side brand section layout.</div></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <span class="section-label">Components</span>
+    <h2 class="section-title">UI Patterns</h2>
+
+    <div class="component-row">
+      <div class="component-label">Navigation Bar</div>
+      <nav class="nav-specimen" aria-label="Site navigation specimen">
+        <span class="nav-brand">L'OISEAU DÉ</span>
+        <ul class="nav-links">
+          <li class="nav-active"><a href="#">New In</a></li>
+          <li><a href="#">50%</a></li>
+          <li><a href="#">Discount</a></li>
+          <li><a href="#">*</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="component-row">
+      <div class="component-label">Buttons</div>
+      <div class="btn-row">
+        <button class="btn btn-primary">Explore Now</button>
+        <button class="btn btn-secondary">Learn More</button>
+        <button class="btn btn-accent">Shop Collection</button>
+        <button class="btn btn-ghost">View All →</button>
+      </div>
+      <p style="font-size:12px;color:var(--fg-subtle);margin-top:var(--sp-3);">Primary uses Black fill · Secondary uses border only · Accent uses Forest/Lime · Ghost uses inline underline</p>
+    </div>
+
+    <div class="component-row">
+      <div class="component-label">Badges &amp; Tags</div>
+      <div class="badge-row">
+        <span class="badge badge-new">New In</span>
+        <span class="badge badge-sale">30% Off</span>
+        <span class="badge badge-gold">Premium</span>
+        <span class="badge badge-muted">Skin Care</span>
+        <span class="badge badge-muted">Cosmetics</span>
+        <span class="badge badge-muted">Face Health</span>
+      </div>
+    </div>
+
+    <div class="component-row">
+      <div class="component-label">Product Cards</div>
+      <div class="product-grid">
+        <div class="product-card">
+          <div class="product-img product-img-a"><span class="product-img-label">Skin Care</span><div class="product-badge-wrap"><span class="badge badge-sale">30% Off</span></div></div>
+          <div class="product-info"><div class="product-category">Velvet Citrus</div><div class="product-name">Flumam Amber</div><div class="product-price-row"><span class="price-current">$126</span><span class="price-original">$180</span></div></div>
+        </div>
+        <div class="product-card">
+          <div class="product-img product-img-b"><span class="product-img-label">Cosmetics</span></div>
+          <div class="product-info"><div class="product-category">Earth Noir</div><div class="product-name">Black Pump</div><div class="product-price-row"><span class="price-current">$85</span></div></div>
+        </div>
+        <div class="product-card">
+          <div class="product-img product-img-c"><span class="product-img-label">Face Health</span><div class="product-badge-wrap"><span class="badge badge-sale">20% Off</span></div></div>
+          <div class="product-info"><div class="product-category">Velvet Citrus</div><div class="product-name">Serene Aesthetic</div><div class="product-price-row"><span class="price-current">$112</span><span class="price-original">$140</span></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <span class="section-label">Motion</span>
+    <h2 class="section-title">Interaction</h2>
+    <p class="section-desc">Transitions are subtle and deliberate. The brand moves at the pace of a curated atelier — not a flash sale. Nothing bounces; everything eases.</p>
+    <div class="motion-grid">
+      <div class="motion-card"><div class="motion-name">Default Transition</div><span class="motion-value">all 0.18s ease</span><div class="motion-desc">Hover states on buttons, links, and interactive elements.</div></div>
+      <div class="motion-card"><div class="motion-name">Fade In</div><span class="motion-value">opacity 0.3s ease-out</span><div class="motion-desc">Page-level content reveals and modal overlays. Opacity only.</div></div>
+      <div class="motion-card"><div class="motion-name">Slide Up</div><span class="motion-value">transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)</span><div class="motion-desc">Hero text entrance. Only on first load, never on repeated patterns.</div></div>
+      <div class="motion-card"><div class="motion-name">Reduced Motion</div><span class="motion-value">prefers-reduced-motion: reduce</span><div class="motion-desc">All transitions disabled. Motion is enhancement only.</div></div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="doc-footer">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">L'OISEAU DÉ</div>
+      <div style="font-size:12px;margin-top:8px;color:var(--c-tan);">Design System v1.0 · July 2026</div>
+    </div>
+    <div class="footer-meta">
+      <div>sales@loiseau.com</div>
+      <div>+1 234 56 7890</div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

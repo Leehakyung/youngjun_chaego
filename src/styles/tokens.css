@@ -1,0 +1,112 @@
+/* L'OISEAU DÉ — Design Tokens
+ * Source: loiseau.framer.website
+ * Usage: @import '@/styles/tokens.css' in main.tsx or index.css
+ */
+
+@theme {
+  --color-cream: #f7f5ed;
+  --color-gray-l: #ecece4;
+  --color-tan: #cacab0;
+  --color-espresso: #483f36;
+  --color-forest: #486e46;
+  --color-lime: #c3e794;
+  --color-sage: #d7e2c1;
+  --color-mint: #f0f7ed;
+  --color-gold: #e8d695;
+  --color-lavender: #fef7ff;
+  --color-coral: #ff2244;
+
+  --font-display:
+    'Clash Display', 'Bahnschrift', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
+  --font-body: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 8px;
+}
+
+:root {
+  /* ── COLOR PRIMITIVES ─────────────────────────── */
+  --c-black:    #000000;
+  --c-white:    #ffffff;
+  --c-cream:    #f7f5ed;   /* page background */
+  --c-gray-l:   #ecece4;   /* borders, muted surfaces */
+  --c-tan:      #cacab0;   /* subtle text, dividers */
+
+  --c-espresso: #483f36;   /* nav bg, dark sections */
+  --c-forest:   #486e46;   /* accent buttons */
+  --c-lime:     #c3e794;   /* highlights, badges */
+  --c-sage:     #d7e2c1;   /* card tints */
+  --c-mint:     #f0f7ed;   /* category card bg */
+
+  --c-gold:     #e8d695;   /* premium badges */
+  --c-lavender: #fef7ff;   /* soft bg variant */
+  --c-coral:    #ff2244;   /* sale badge, alerts only */
+
+  /* ── SEMANTIC TOKENS (light mode) ────────────── */
+  --bg:         var(--c-cream);
+  --bg-surface: var(--c-white);
+  --bg-muted:   var(--c-gray-l);
+  --fg:         var(--c-black);
+  --fg-muted:   var(--c-espresso);
+  --fg-subtle:  var(--c-tan);
+  --border:     var(--c-gray-l);
+  --accent:     var(--c-forest);
+  --accent-hi:  var(--c-lime);
+
+  /* ── TYPOGRAPHY ───────────────────────────────── */
+  --font-display: "Clash Display", "Bahnschrift", "Gill Sans MT", "Trebuchet MS", sans-serif;
+  --font-body:    "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+
+  /* ── SPACING (4px base) ───────────────────────── */
+  --sp-1:  4px;
+  --sp-2:  8px;
+  --sp-3:  12px;
+  --sp-4:  16px;
+  --sp-5:  20px;
+  --sp-6:  24px;
+  --sp-8:  32px;
+  --sp-10: 40px;
+  --sp-12: 48px;
+  --sp-16: 64px;
+  --sp-20: 80px;
+  --sp-24: 96px;
+
+  /* ── BORDER RADIUS ────────────────────────────── */
+  --r-sm: 2px;
+  --r-md: 4px;
+  --r-lg: 8px;
+
+  /* ── MOTION ───────────────────────────────────── */
+  --ease-default:  all 0.18s ease;
+  --ease-fade:     opacity 0.3s ease-out;
+  --ease-slide-up: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* ── BREAKPOINTS (reference only) ────────────── */
+  /* Mobile:  ≤ 809px                              */
+  /* Tablet:  810px – 1199px                       */
+  /* Desktop: ≥ 1200px                             */
+  /* Container max-width: 1200px, gutter: 32px     */
+}
+
+/* ── DARK MODE ──────────────────────────────────── */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg:         #1a1714;
+    --bg-surface: #252119;
+    --bg-muted:   #2e2a25;
+    --fg:         var(--c-cream);
+    --fg-muted:   var(--c-tan);
+    --fg-subtle:  #7a7268;
+    --border:     #3a342e;
+    --accent:     var(--c-lime);
+    --accent-hi:  var(--c-forest);
+  }
+}
+
+/* ── ACCESSIBILITY ──────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  --ease-default:  none;
+  --ease-fade:     none;
+  --ease-slide-up: none;
+}
