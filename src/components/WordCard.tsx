@@ -2,19 +2,21 @@ import type { Word } from '@/types/word'
 
 interface WordCardProps {
   word: Word | null
+  emptyStateHint?: string | null
 }
 
 function levelStars(level: Word['level']): string {
   return '⭐'.repeat(level) + '☆'.repeat(5 - level)
 }
 
-export function WordCard({ word }: WordCardProps) {
+export function WordCard({ word, emptyStateHint }: WordCardProps) {
   if (!word) {
     return (
       <div className="flex min-h-56 flex-col items-center justify-center gap-2 rounded-md border border-gray-l bg-white p-8 text-center">
         <p className="font-body text-base text-espresso">
           아래 버튼을 눌러 첫 단어를 뽑아보세요
         </p>
+        {emptyStateHint ? <p className="font-body text-xs text-tan">💡 관심 기능: {emptyStateHint}</p> : null}
       </div>
     )
   }
